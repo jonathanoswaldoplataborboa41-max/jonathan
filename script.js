@@ -1,6 +1,6 @@
 const datosMigracionGlobal = [
     { id: 1, nombre: 'documentacion', registros: 12450, tamanoMB: 4.2, estado: 'Exitosa' },
-    { id: 2, nombre: 'edofuerza', registros: 45200, tamanoMB: 12.8, estado: 'Exitosa' },
+    { id: 2, nombre: 'edofuerza', registros: 45200, tam MB: 12.8, estado: 'Exitosa' },
     { id: 3, nombre: 'edofuerza_servicios', registros: 850321, tamanoMB: 142.5, estado: 'En Proceso' },
     { id: 4, nombre: 'fatiga', registros: 140, tamanoMB: 0.5, estado: 'Fallida' },
     { id: 5, nombre: 'infraestructura', registros: 23100, tamanoMB: 9.1, estado: 'Exitosa' },
@@ -10,14 +10,15 @@ const datosMigracionGlobal = [
     { id: 9, nombre: 'rechum', registros: 1540, tamanoMB: 0.8, estado: 'Exitosa' },
     { id: 10, nombre: 'rrhh', registros: 9200, tamanoMB: 3.1, estado: 'En Proceso' },
     { id: 11, nombre: 'saia', registros: 4120, tamanoMB: 2.3, estado: 'Exitosa' },
-    { id: 12, merge: true, nombre: 'sanciones', registros: 85, tamanoMB: 0.2, estado: 'Fallida' }
+    { id: 12, nombre: 'sanciones', registros: 85, tamanoMB: 0.2, estado: 'Fallida' }
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("🚀 Cargando Dashboard Máxima Compatibilidad...");
+    console.log("🚀 Cargando Dashboard Corrección Selector...");
     prepararEstructuraModal();
     llenarTabla(datosMigracionGlobal);
     configurarBotonesFiltros();
+    actualizarTarjetas(datosMigracionGlobal);
 });
 
 function llenarTabla(datos) {
@@ -44,6 +45,21 @@ function llenarTabla(datos) {
         `;
         tablaCuerpo.appendChild(tr);
     });
+}
+
+function actualizarTarjetas(datos) {
+    // Buscamos los elementos h1 dentro de las tarjetas basándonos en el orden visual
+    const elementosH1 = document.querySelectorAll(".card h1, [class*='card'] h1, h1");
+    
+    if (elementosH1.length >= 3) {
+        const totalTablas = datos.length;
+        const exitosas = datos.filter(t => t.estado.toLowerCase().includes("exito")).length;
+        const fallidas = datos.filter(t => t.estado.toLowerCase().includes("falli")).length;
+
+        elementosH1[0].textContent = totalTablas;
+        elementosH1[1].textContent = exitosas;
+        elementosH1[2].textContent = fallidas;
+    }
 }
 
 function prepararEstructuraModal() {
@@ -94,7 +110,6 @@ function prepararEstructuraModal() {
     modalHTML.onclick = (e) => { if (e.target === modalHTML) cerrarVentanaMapeo(); };
 }
 
-// Hacemos las funciones globales de forma explícita para que el HTML las encuentre sí o sí
 window.mostrarMapeoReal = function(nombreBD) {
     const modal = document.getElementById("modalMapeoReal");
     const titulo = document.getElementById("modalTituloTabla");
