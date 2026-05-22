@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Migración SQL Server 2012</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <header class="db-header">
+            <div>
+                <h1>DataMigration Manager</h1>
+                <p class="subtitle">Monitoreo de migración: MySQL 5.7 ➔ SQL Server 2012</p>
+            </div>
+            <div class="db-status-badge">Conectado a Servidor</div>
+        </header>
+
+        <section class="metrics-grid">
+            <div class="card metric-card">
+                <h3>Total Tablas</h3>
+                <p id="metric-total">0</p>
+            </div>
+            <div class="card metric-card success-card">
+                <h3>Migradas con Éxito</h3>
+                <p id="metric-success">0</p>
+            </div>
+            <div class="card metric-card danger-card">
+                <h3>Con Errores</h3>
+                <p id="metric-errors">0</p>
+            </div>
+        </section>
+
+        <main class="main-content card">
+            <div class="content-header">
+                <h2>Estado de Mapeo por Tabla</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="Exitoso">Exitosas</button>
+                    <button class="filter-btn" data-filter="En Proceso">En Proceso</button>
+                    <button class="filter-btn" data-filter="Fallido">Fallidas</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="migration-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre de Tabla</th>
+                            <th>Registros</th>
+                            <th>Tamaño (MB)</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="migration-rows">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>>

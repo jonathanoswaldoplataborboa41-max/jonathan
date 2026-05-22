@@ -1,0 +1,18 @@
+@echo off
+:: Configuración de carpetas (Ajusta la ruta de destino)
+set DESTINO=C:\Respaldos_BD
+set FECHA=%date:~-4%-%date:~3,2%-%date:~0,2%
+
+:: Crear carpeta si no existe
+if not exist "%DESTINO%" mkdir "%DESTINO%"
+
+echo Iniciando respaldo de bases de datos...
+
+:: Respaldo de RECHUM
+"C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqldump.exe" -u usuario -pTuPassword --port=3307 rechum > "%DESTINO%\rechum_%FECHA%.sql"
+
+:: Respaldo de SAIA
+"C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqldump.exe" -u usuario -pTuPassword --port=3307 saia > "%DESTINO%\saia_%FECHA%.sql"
+
+echo Respaldo completado con éxito en %DESTINO%
+pause
