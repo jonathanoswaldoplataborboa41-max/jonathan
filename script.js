@@ -1,4 +1,5 @@
-let datosMigracionGlobal = [
+// 1. Datos estáticos de respaldo para GitHub Pages
+const datosMigracionGlobal = [
     { id: 1, nombre: 'documentacion', registros: 12450, tamanoMB: 4.2, estado: 'Exitosa' },
     { id: 2, nombre: 'edofuerza', registros: 45200, tamanoMB: 12.8, estado: 'Exitosa' },
     { id: 3, nombre: 'edofuerza_servicios', registros: 850321, tamanoMB: 142.5, estado: 'En Proceso' },
@@ -13,12 +14,18 @@ let datosMigracionGlobal = [
     { id: 12, nombre: 'sanciones', registros: 85, tamanoMB: 0.2, estado: 'Fallida' }
 ];
 
+// 2. Evento principal de carga
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("🚀 Cargando Dashboard Corrección V4...");
+    console.log("🚀 Cargando Dashboard Estable...");
+    
+    // Pintamos la tabla de inmediato
     llenarTabla(datosMigracionGlobal);
-    configurarBotonesFiltros(); // Aquí ya va a encontrar la función perfectamente
+    
+    // Activamos los filtros
+    configurarBotonesFiltros();
 });
 
+// 3. Función para rellenar la tabla HTML
 function llenarTabla(datos) {
     const tablaCuerpo = document.querySelector("table tbody");
     if (!tablaCuerpo) return;
@@ -26,6 +33,7 @@ function llenarTabla(datos) {
 
     datos.forEach(fila => {
         const tr = document.createElement("tr");
+        // Atributo para que el filtro sepa qué estado es cada fila
         tr.setAttribute("data-estado-fila", fila.estado.toLowerCase());
         
         let badgeColor = "badge-en-proceso";
@@ -45,9 +53,10 @@ function llenarTabla(datos) {
     });
 }
 
+// 4. Función para controlar los botones de filtro
 function configurarBotonesFiltros() {
-    console.log("🎯 Inicializando escuchadores de botones...");
     const botones = document.querySelectorAll("button");
+    // Filtramos para ignorar los botones de "Ver Mapeo" dentro de la tabla
     const botonesFiltro = Array.from(botones).filter(btn => !btn.classList.contains("btn-detalle"));
     const filas = document.querySelectorAll("table tbody tr");
 
@@ -55,15 +64,16 @@ function configurarBotonesFiltros() {
         filas.forEach(fila => {
             const estadoFila = fila.getAttribute("data-estado-fila");
             if (estadoObjetivo === "todas") {
-                fila.style.display = "";
+                fila.style.display = ""; // Muestra todo
             } else if (estadoFila && estadoFila.includes(estadoObjetivo)) {
-                fila.style.display = "";
+                fila.style.display = ""; // Muestra coincidencia
             } else {
-                fila.style.display = "none";
+                fila.style.display = "none"; // Oculta las demás
             }
         });
     }
 
+    // Buscamos los botones por su texto e inyectamos el evento clic
     botonesFiltro.forEach(btn => {
         const txt = btn.textContent.trim().toLowerCase();
         if (txt.includes("todas")) btn.onclick = () => filtrar("todas");
