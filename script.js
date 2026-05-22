@@ -1,6 +1,6 @@
 const datosMigracionGlobal = [
     { id: 1, nombre: 'documentacion', registros: 12450, tamanoMB: 4.2, estado: 'Exitosa' },
-    { id: 2, nombre: 'edofuerza', registros: 45200, tam MB: 12.8, estado: 'Exitosa' },
+    { id: 2, nombre: 'edofuerza', registros: 45200, tamanoMB: 12.8, estado: 'Exitosa' },
     { id: 3, nombre: 'edofuerza_servicios', registros: 850321, tamanoMB: 142.5, estado: 'En Proceso' },
     { id: 4, nombre: 'fatiga', registros: 140, tamanoMB: 0.5, estado: 'Fallida' },
     { id: 5, nombre: 'infraestructura', registros: 23100, tamanoMB: 9.1, estado: 'Exitosa' },
@@ -14,7 +14,7 @@ const datosMigracionGlobal = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("🚀 Cargando Dashboard Corrección Selector...");
+    console.log("🚀 Cargando Dashboard Corrección Ortográfica...");
     prepararEstructuraModal();
     llenarTabla(datosMigracionGlobal);
     configurarBotonesFiltros();
@@ -48,9 +48,7 @@ function llenarTabla(datos) {
 }
 
 function actualizarTarjetas(datos) {
-    // Buscamos los elementos h1 dentro de las tarjetas basándonos en el orden visual
     const elementosH1 = document.querySelectorAll(".card h1, [class*='card'] h1, h1");
-    
     if (elementosH1.length >= 3) {
         const totalTablas = datos.length;
         const exitosas = datos.filter(t => t.estado.toLowerCase().includes("exito")).length;
